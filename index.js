@@ -179,7 +179,7 @@ app.post('/webhook', (req, res) => {
           const sessionId = findOrCreateSession(sender);
 
           // We retrieve the message content
-          const {text, attachments} = event.message;
+          const text, attachments = event.message;
 
           if (attachments) {
             // We received an attachment
