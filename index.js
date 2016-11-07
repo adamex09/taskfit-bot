@@ -36,18 +36,6 @@ const PORT = process.env.PORT || 8445;
 // Wit.ai parameters
 const WIT_TOKEN = process.env.WIT_TOKEN;
 
-// Index route
-app.get('/', function (req, res) {
-    res.send('Hello world, I am a chat bot')
-})
-
-// for Facebook verification
-app.get('/webhook/', function (req, res) {
-    if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
-        res.send(req.query['hub.challenge'])
-    }
-    res.send('Error, wrong token')
-})
 
 const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
 
