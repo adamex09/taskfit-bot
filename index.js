@@ -120,7 +120,7 @@ const actions = {
   // See https://wit.ai/docs/quickstart
 
 
-  
+
 };
 
 // Setting up our bot
@@ -140,6 +140,11 @@ app.use(({method, url}, rsp, next) => {
 });
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 
+// Index route
+app.get('/', function (req, res) {
+    res.send('Hello world, I am a chat bot')
+})
+
 // Webhook setup
 app.get('/webhook', (req, res) => {
   if (req.query['hub.mode'] === 'subscribe' &&
@@ -149,6 +154,8 @@ app.get('/webhook', (req, res) => {
     res.sendStatus(400);
   }
 });
+
+
 
 // Message handler
 app.post('/webhook', (req, res) => {
