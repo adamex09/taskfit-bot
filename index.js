@@ -38,7 +38,7 @@ const WIT_TOKEN = process.env.WIT_TOKEN;
 
 
 const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
-
+const FB_APP_SECRET = process.env.FB_APP_SECRET;
 // ----------------------------------------------------------------------------
 // Messenger API specific code
 
