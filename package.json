@@ -1,5 +1,8 @@
 {
   "name": "nodejs",
+  "engines": {
+    "node": "6.2.2"
+  },
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,3 +17,5 @@
     "request": "^2.78.0"
   }
 }
+
+

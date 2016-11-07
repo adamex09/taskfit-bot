@@ -104,7 +104,7 @@ const findOrCreateSession = (fbid) => {
 
 // Our bot actions
 const actions = {
-  send(sessionId, text) {
+  send({sessionId}, {text}) {
     // Our bot has something to say!
     // Let's retrieve the Facebook user whose session belongs to
     const recipientId = sessions[sessionId].fbid;
@@ -141,7 +141,7 @@ const wit = new Wit({
 
 // Starting our webserver and putting it all together
 const app = express();
-app.use((method, url, rsp, next) => {
+app.use(({method, url}, rsp, next) => {
   rsp.on('finish', () => {
     console.log(`${rsp.statusCode} ${method} ${url}`);
   });
@@ -179,7 +179,7 @@ app.post('/webhook', (req, res) => {
           const sessionId = findOrCreateSession(sender);
 
           // We retrieve the message content
-          const text, attachments = event.message;
+          const {text, attachments} = event.message;
 
           if (attachments) {
             // We received an attachment
