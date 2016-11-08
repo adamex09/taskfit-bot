@@ -122,7 +122,7 @@ createTask({context, entities}) {
   return new Promise(function(resolve, reject) {
     var task_title = firstEntityValue(entities, "task_title")
     if (task_title) {
-      context.forecast = 'sunny in ' + task_title; // we should call a weather API here
+      context.task_title = 'sunny in ' + task_title; // we should call a weather API here
       delete context.missingLocation;
     } else {
       context.missingLocation = true;
