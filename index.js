@@ -43,8 +43,8 @@ const WL_CLIENT_TOKEN = process.env.WL_CLIENT_TOKEN;
 
 var WunderlistSDK = require('wunderlist');
 var wunderlistAPI = new WunderlistSDK({
-  'accessToken': WL_CLIENT_TOKEN,
-  'clientID': WL_CLIENT_ID
+   accessToken: WL_CLIENT_TOKEN,
+   clientID: WL_CLIENT_ID
 });
  
 wunderlistAPI.http.lists.all()
@@ -150,7 +150,7 @@ const actions = {
     return new Promise(function(resolve, reject) {
       var task_title = firstEntityValue(entities, "task_title")
       if (task_title) {
-        context.taskTitle = task_title + wunderlist.getLists(); // we should call a weather API here
+        context.taskTitle = task_title; // we should call a weather API here
         delete context.missingLocation;
       } else {
         context.missingLocation = true;
