@@ -108,8 +108,6 @@ const actions = {
     // Our bot has something to say!
     // Let's retrieve the Facebook user whose session belongs to
     const recipientId = sessions[sessionId].fbid;
-    const {sessionId, context, entities} = request;
-    const {text, quickreplies} = response;
     if (recipientId) {
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
@@ -132,17 +130,6 @@ const actions = {
   },
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
-
-
-createTask({context, entities}) {
-  return new Promise(function(resolve, reject) {
-    var new_task = firstEntityValue(entities, "task_title")
-    if (new_task) {
-      context.task_title = 'sunny in ' + new_task; // we should call a weather API here
-    }
-    return Promise.resolve()
-  });
-},
 
 
 };
