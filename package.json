@@ -17,5 +17,8 @@
     "node-fetch": "^1.6.3",
     "node-wit": "^4.1.0",
     "request": "^2.78.0"
+  },
+  "devDependencies": {
+    "wunderlist-api": "^1.0.1"
   }
 }

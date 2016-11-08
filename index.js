@@ -33,12 +33,18 @@ try {
 // Webserver parameter
 const PORT = process.env.PORT || 8445;
 
-// Wit.ai parameters
+// SERVER VARS
 const WIT_TOKEN = process.env.WIT_TOKEN;
-
-
 const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
 const FB_APP_SECRET = process.env.FB_APP_SECRET;
+const WL_CLIENT_ID = process.env.WL_CLIENT_ID;
+const WL_CLIENT_SECRET = process.env.WL_CLIENT_SECRET;
+const WL_CLIENT_TOKEN = process.env.WL_CLIENT_TOKEN;
+
+
+const wunderlist = require('wunderlist-api');
+wunderlist.authentication(WL_CLIENT_TOKEN, WL_CLIENT_ID);
+
 // ----------------------------------------------------------------------------
 // Messenger API specific code
 
@@ -134,7 +140,7 @@ const actions = {
     return new Promise(function(resolve, reject) {
       var task_title = firstEntityValue(entities, "task_title")
       if (task_title) {
-        context.taskTitle = task_title; // we should call a weather API here
+        context.taskTitle = task_title + wunderlist.getLists(); // we should call a weather API here
         delete context.missingLocation;
       } else {
         context.missingLocation = true;
