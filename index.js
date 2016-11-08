@@ -42,8 +42,13 @@ const WL_CLIENT_SECRET = process.env.WL_CLIENT_SECRET;
 const WL_CLIENT_TOKEN = process.env.WL_CLIENT_TOKEN;
 
 
-const wunderlist = require('wunderlist-api');
-wunderlist.authentication(WL_CLIENT_TOKEN, WL_CLIENT_ID);
+import Wunderlist from 'wunderlist-api';
+
+const wunderlist = new Wunderlist({
+  clientId: 'WL_CLIENT_ID',
+  accessToken: 'WL_CLIENT_TOKEN'
+})
+// => authenticated
 
 // ----------------------------------------------------------------------------
 // Messenger API specific code
