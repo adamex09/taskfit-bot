@@ -130,6 +130,14 @@ const actions = {
   },
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
+  getForecast({context, entities}) {
+    return new Promise(function(resolve, reject) {
+      // Here should go the api call, e.g.:
+      // context.forecast = apiCall(context.loc)
+      context.forecast = 'sunny';
+      return resolve(context);
+    });
+  },
 
 
 };
@@ -168,7 +176,7 @@ app.get('/webhook', (req, res) => {
 
 
 
-// Message handler
+/// Message handler
 app.post('/webhook', (req, res) => {
   // Parse the Messenger payload
   // See the Webhook reference
@@ -218,7 +226,7 @@ app.post('/webhook', (req, res) => {
 
               // Updating the user's current session state
               sessions[sessionId].context = context;
-              console.log('Context' + JSON.stringify(context));
+              console.log('Context', JSON.stringify(context));
             })
             .catch((err) => {
               console.error('Oops! Got an error from Wit: ', err.stack || err);
