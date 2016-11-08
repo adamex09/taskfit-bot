@@ -132,9 +132,9 @@ const actions = {
   // See https://wit.ai/docs/quickstart
 createTask({context, entities}) {
   return new Promise(function(resolve, reject) {
-    var task_title = firstEntityValue(entities, "task_title")
-    if (task_title) {
-      context.task_title = 'sunny in ' + task_title; // we should call a weather API here
+    var new_task = firstEntityValue(entities, "task_title")
+    if (new_task) {
+      context.task_title = 'sunny in ' + new_task; // we should call a weather API here
     }
     return Promise.resolve()
   });
