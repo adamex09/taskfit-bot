@@ -130,6 +130,14 @@ const actions = {
   },
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
+  send(request, response) {
+    const {sessionId, context, entities} = request;
+    const {text, quickreplies} = response;
+    return new Promise(function(resolve, reject) {
+      console.log('sending...', JSON.stringify(response));
+      return Promise.resolve();
+    });
+  },
 createTask({context, entities}) {
   return new Promise(function(resolve, reject) {
     var new_task = firstEntityValue(entities, "task_title")
