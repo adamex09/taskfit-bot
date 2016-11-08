@@ -19,6 +19,5 @@
     "request": "^2.78.0"
   },
   "devDependencies": {
-    "wunderlist-api": "^1.0.1"
   }
 }

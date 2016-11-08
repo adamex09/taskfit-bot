@@ -41,22 +41,18 @@ const WL_CLIENT_ID = process.env.WL_CLIENT_ID;
 const WL_CLIENT_SECRET = process.env.WL_CLIENT_SECRET;
 const WL_CLIENT_TOKEN = process.env.WL_CLIENT_TOKEN;
 
-
-import Wunderlist from 'wunderlist-api';
-
-const wunderlist = new Wunderlist({
-  clientId: WL_CLIENT_ID,
-  accessToken: WL_CLIENT_TOKEN;
-})
-// => authenticated
-
-// authentication
-wunderlist.method(parameters)
-  .then( response => {
-    // response
+var WunderlistSDK = require('wunderlist');
+var wunderlistAPI = new WunderlistSDK({
+  'accessToken': WL_CLIENT_TOKEN,
+  'clientID': WL_CLIENT_ID
+});
+ 
+wunderlistAPI.http.lists.all()
+  .done(function (lists) {
+    /* do stuff */
   })
-  .catch( error => {
-    // handle error
+  .fail(function () {
+    console.error('there was a problem');
   });
 
 // ----------------------------------------------------------------------------
