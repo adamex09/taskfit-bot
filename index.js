@@ -218,7 +218,7 @@ app.post('/webhook', (req, res) => {
 
               // Updating the user's current session state
               sessions[sessionId].context = context;
-              console.log('Context' + sessions[sessionId].context);
+              console.log('Context' + JSON.stringify(context));
             })
             .catch((err) => {
               console.error('Oops! Got an error from Wit: ', err.stack || err);
