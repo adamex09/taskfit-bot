@@ -134,7 +134,7 @@ const actions = {
     return new Promise(function(resolve, reject) {
       var task_title = firstEntityValue(entities, "task_title")
       if (task_title) {
-        context.taskTitle = 'sunny in ' + task_title; // we should call a weather API here
+        context.taskTitle = task_title; // we should call a weather API here
         delete context.missingLocation;
       } else {
         context.missingLocation = true;
