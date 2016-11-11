@@ -144,17 +144,28 @@ const actions = {
       return Promise.resolve()
     }
   },
-  // You should implement your custom actions here
-  // See https://wit.ai/docs/quickstart
+
+  // Create new task
   createTask({context, entities}) {
     return new Promise(function(resolve, reject) {
       var task_title = firstEntityValue(entities, "task_title")
       if (task_title) {
-        context.taskTitle = task_title; // we should call a weather API here
+        context.taskTitle = task_title; // we should call the API here
         delete context.missingTaskTitle;
       } else {
+        //if task title is missing
         context.missingTaskTitle = true;
         delete context.taskTitle;
+      }
+      return resolve(context);
+    });
+  },
+
+  getLists({context, entities}) {
+    return new Promise(function(resolve, reject) {
+      var get_lists = firstEntityValue(entities, "get_lists")
+      if (get_lists) {
+        context.getLists = "These are your lists:\nInbox\nPersonal\nBasewalk"; 
       }
       return resolve(context);
     });
