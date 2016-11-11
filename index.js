@@ -43,8 +43,8 @@ const WL_ACCESS_TOKEN = process.env.WL_ACCESS_TOKEN;
 
 var WunderlistSDK = require('wunderlist');
 var wunderlistAPI = new WunderlistSDK({
-   'accessToken': WL_ACCESS_TOKEN,
-   'clientID': WL_CLIENT_ID
+   accessToken: encodeURIComponent(WL_ACCESS_TOKEN),
+   clientID: WL_CLIENT_ID
 });
  
 wunderlistAPI.http.lists.all()
