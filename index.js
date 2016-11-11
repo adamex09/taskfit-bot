@@ -39,12 +39,12 @@ const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
 const FB_APP_SECRET = process.env.FB_APP_SECRET;
 const WL_CLIENT_ID = process.env.WL_CLIENT_ID;
 const WL_CLIENT_SECRET = process.env.WL_CLIENT_SECRET;
-const WL_CLIENT_TOKEN = process.env.WL_CLIENT_TOKEN;
+const WL_ACCESS_TOKEN = process.env.WL_ACCESS_TOKEN;
 
 var WunderlistSDK = require('wunderlist');
 var wunderlistAPI = new WunderlistSDK({
-   accessToken: '3fc8c8a9dbd1533d3cc4a3bca08c8d3a115926c103ab0db782ae4f816fa4',
-   clientID: 'e8249750a143d0d46153'
+   accessToken= WL_ACCESS_TOKEN,
+   clientID: WL_CLIENT_ID
 });
  
 wunderlistAPI.http.lists.all()
