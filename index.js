@@ -165,7 +165,7 @@ const actions = {
     return new Promise(function(resolve, reject) {
       var get_lists = firstEntityValue(entities, "get_lists")
       if (get_lists) {
-        context.getLists = "These are your lists:\nInbox\nPersonal\nBasewalk"; 
+        context.Lists = "\nInbox\nPersonal\nBasewalk"; 
       }
       return resolve(context);
     });
