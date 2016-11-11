@@ -151,9 +151,9 @@ const actions = {
       var task_title = firstEntityValue(entities, "task_title")
       if (task_title) {
         context.taskTitle = task_title; // we should call a weather API here
-        delete context.missingLocation;
+        delete context.missingTaskTitle;
       } else {
-        context.missingLocation = true;
+        context.missingTaskTitle = true;
         delete context.taskTitle;
       }
       return resolve(context);
