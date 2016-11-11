@@ -163,8 +163,7 @@ const actions = {
 
   getLists({context, entities}) {
     return new Promise(function(resolve, reject) {
-        context.Lists = "\nInbox\nPersonal\nBasewalk"; 
-      }
+      context.Lists = "\nInbox\nPersonal\nBasewalk"; 
       return resolve(context);
     });
   },
