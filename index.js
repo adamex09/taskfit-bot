@@ -166,7 +166,7 @@ const actions = {
   },
 
   Test(sender) {
-      fbMessage(sender, 'test message goes here')
+      fbMessage(recipientId, 'test message goes here')
   },
 
 
