@@ -165,7 +165,7 @@ const actions = {
     });
   },
 
-  Test {
+  Test(sender) {
       fbMessage(sender, 'test message goes here')
     };
   },
