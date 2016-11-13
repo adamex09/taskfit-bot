@@ -167,7 +167,6 @@ const actions = {
 
   Test(sender) {
       fbMessage(sender, 'test message goes here')
-    }
   },
 
 
