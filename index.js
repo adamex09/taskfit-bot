@@ -158,15 +158,15 @@ const actions = {
     });
   },
   //return all the user's tasks
-  //getTasks({context, entities}) {
-   // return new Promise(function(resolve, reject) {
-     // context.Tasks = "\nDesign a new logo\nCall Steven about meeting appointment\nCreate a specification document"; 
-    //  return resolve(context);
-    //});
-  //},
+  getTasks({context, entities}) {
+    return new Promise(function(resolve, reject) {
+      context.Tasks = "\nDesign a new logo\nCall Steven about meeting appointment\nCreate a specification document"; 
+      return resolve(context);
+    });
+  },
 
-    getTasks {
-      fbMessage(sender, 'Task list goes here')
+  Test {
+      fbMessage(sender, 'test message goes here')
     };
   },
 
