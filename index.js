@@ -165,8 +165,8 @@ const actions = {
     });
   },
 
-  Test(recipientId) {
-      return fbMessage(recipientId, 'test message goes here')
+  Test(id) {
+      return fbMessage(id, 'test message goes here')
   },
 
 
