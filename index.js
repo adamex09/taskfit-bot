@@ -149,17 +149,17 @@ const actions = {
       return resolve(context);
     });
   },
-
+  //return all the user's lists
   getLists({context, entities}) {
     return new Promise(function(resolve, reject) {
       context.Lists = "\nInbox\nPersonal\nBasewalk"; 
       return resolve(context);
     });
   },
-
-  emptyContext({context, entities}) {
+  //return all the user's tasks
+  getTasks({context, entities}) {
     return new Promise(function(resolve, reject) {
-      context = ""; 
+      context.Tasks = "\nDesign a new logo\nCall Steven about meeting appointment\nCreate a specification document"; 
       return resolve(context);
     });
   },
@@ -251,7 +251,6 @@ app.post('/webhook', (req, res) => {
 
               // Updating the user's current session state
               sessions[sessionId].context = context;
-              console.log('Context', JSON.stringify(context));
             })
             .catch((err) => {
               console.error('Oops! Got an error from Wit: ', err.stack || err);
