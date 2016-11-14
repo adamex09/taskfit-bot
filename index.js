@@ -76,7 +76,7 @@ const fbMessage = (id, text) => {
 
 // This will contain all user sessions.
 // Each session has an entry:
-// sessionId -> {fbid: facebookUserId, context: sessionState}
+//sessionId -> {fbid: facebookUserId, context: sessionState}
 const sessions = {};
 
 const findOrCreateSession = (fbid) => {
@@ -166,7 +166,7 @@ const actions = {
   },
 
   Test() {
-      fbMessage(recipientId, 'test message goes here')
+      fbMessage(sender, 'test message goes here')
   },
 
 
@@ -250,9 +250,9 @@ app.post('/webhook', (req, res) => {
               // Based on the session state, you might want to reset the session.
               // This depends heavily on the business logic of your bot.
               // Example:
-              // if (context['done']) {
-              //   delete sessions[sessionId];
-              // }
+              if (context['done']) {
+              delete sessions[sessionId];
+              }
 
               // Updating the user's current session state
               sessions[sessionId].context = context;
