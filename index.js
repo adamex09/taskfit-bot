@@ -125,7 +125,7 @@ function sendGenericMessage(sender) {
       "type":"template",
       "payload":{
         "template_type":"button",
-        "text":"Please choose from the options:",
+        "text":"Please choose from the options below:",
         "buttons":[
           {
             "type":"postback",
