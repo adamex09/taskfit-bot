@@ -35,7 +35,6 @@ wunderlistAPI.http.lists.all()
     console.error('there was a problem');
   });
 
-// ----------------------------------------------------------------------------
 
 
 // Starting our webserver and putting it all together
@@ -85,6 +84,11 @@ app.post('/webhook/', function (req, res) {
         console.log('Login message sent');
         continue
       }
+      if (text === 'Show tasks') {
+        showLists(sender);
+        console.log('Showing tasks');
+        continue
+      }
       //else send genericmessage
       sendGenericMessage(sender);
     }
@@ -129,12 +133,12 @@ function sendGenericMessage(sender) {
         "buttons":[
           {
             "type":"postback",
-            "title":"Show tasks",
+            "title":"Create new task",
             "payload":"USER_DEFINED_PAYLOAD"
           },
           {
             "type":"postback",
-            "title":"Show lists",
+            "title":"Show tasks",
             "payload":"USER_DEFINED_PAYLOAD"
           }
         ]
@@ -192,6 +196,175 @@ function sendLoginMessage(sender) {
   })
 }
 
+function showLists(sender) {
+  let messageData = {
+    "attachment": {
+        "type": "template",
+        "payload": {
+            "template_type": "list",
+            "top_element_style": "compact",
+            "elements": [
+                {
+                    "title": "Classic White T-Shirt",
+                    "image_url": "https://peterssendreceiveapp.ngrok.io/img/white-t-shirt.png",
+                    "subtitle": "100% Cotton, 200% Comfortable",
+                    "default_action": {
+                        "type": "web_url",
+                        "url": "https://peterssendreceiveapp.ngrok.io/view?item=100",
+                        "messenger_extensions": true,
+                        "webview_height_ratio": "tall",
+                        "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                    },
+                    "buttons": [
+                        {
+                            "title": "Buy",
+                            "type": "web_url",
+                            "url": "https://peterssendreceiveapp.ngrok.io/shop?item=100",
+                            "messenger_extensions": true,
+                            "webview_height_ratio": "tall",
+                            "fallback_url": "https://peterssendreceiveapp.ngrok.io/"                        
+                        }
+                    ]                
+                },
+                {
+                    "title": "Classic Blue T-Shirt",
+                    "image_url": "https://peterssendreceiveapp.ngrok.io/img/blue-t-shirt.png",
+                    "subtitle": "100% Cotton, 200% Comfortable",
+                    "default_action": {
+                        "type": "web_url",
+                        "url": "https://peterssendreceiveapp.ngrok.io/view?item=101",
+                        "messenger_extensions": true,
+                        "webview_height_ratio": "tall",
+                        "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                    },
+                    "buttons": [
+                        {
+                            "title": "Buy",
+                            "type": "web_url",
+                            "url": "https://peterssendreceiveapp.ngrok.io/shop?item=101",
+                            "messenger_extensions": true,
+                            "webview_height_ratio": "tall",
+                            "fallback_url": "https://peterssendreceiveapp.ngrok.io/"                        
+                        }
+                    ]                
+                },
+                {
+                    "title": "Classic Black T-Shirt",
+                    "image_url": "https://peterssendreceiveapp.ngrok.io/img/black-t-shirt.png",
+                    "subtitle": "100% Cotton, 200% Comfortable",
+                    "default_action": {
+                        "type": "web_url",
+                        "url": "https://peterssendreceiveapp.ngrok.io/view?item=102",
+                        "messenger_extensions": true,
+                        "webview_height_ratio": "tall",
+                        "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                    },
+                    "buttons": [
+                        {
+                            "title": "Buy",
+                            "type": "web_url",
+                            "url": "https://peterssendreceiveapp.ngrok.io/shop?item=102",
+                            "messenger_extensions": true,
+                            "webview_height_ratio": "tall",
+                            "fallback_url": "https://peterssendreceiveapp.ngrok.io/"                        
+                        }
+                    ]                
+                },
+                {
+                    "title": "Classic Gray T-Shirt",
+                    "image_url": "https://peterssendreceiveapp.ngrok.io/img/gray-t-shirt.png",
+                    "subtitle": "100% Cotton, 200% Comfortable",
+                    "default_action": {
+                        "type": "web_url",
+                        "url": "https://peterssendreceiveapp.ngrok.io/view?item=103",
+                        "messenger_extensions": true,
+                        "webview_height_ratio": "tall",
+                        "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                    },
+                    "buttons": [
+                        {
+                            "title": "Buy",
+                            "type": "web_url",
+                            "url": "https://peterssendreceiveapp.ngrok.io/shop?item=103",
+                            "messenger_extensions": true,
+                            "webview_height_ratio": "tall",
+                            "fallback_url": "https://peterssendreceiveapp.ngrok.io/"                        
+                        }
+                    ]                
+                }
+            ],
+             "buttons": [
+                {
+                    "title": "View More",
+                    "type": "postback",
+                    "payload": "payload"                        
+                }
+            ]  
+        }
+    }
+  }
+  request({
+    url: 'https://graph.facebook.com/v2.6/me/messages',
+    qs: {access_token:FB_PAGE_ACCESS_TOKEN},
+    method: 'POST',
+    json: {
+      recipient: {id:sender},
+      message: messageData,
+    }
+  }, function(error, response, body) {
+    if (error) {
+      console.log('Error sending messages: ', error)
+    } else if (response.body.error) {
+      console.log('Error: ', response.body.error)
+    }
+  })
+}
+
+
+/*
+function WunderlistAuth(sender, text) {
+  request({
+    url: 'https://www.wunderlist.com/oauth/access_token',
+    method: 'POST',
+    json: { 
+      "code":"<CODE>", 
+      "client_id": WL_CLIENT_ID,
+      "client_secret": WL_CLIENT_SECRET
+    }
+  }, function(error, response, body) {
+    if (error) {
+      console.log('Error authenticating: ', error)
+    } else if (response.body.error) {
+      console.log('Error: ', response.body.error)
+    }
+  })
+}
+
+function startWunderlistAuthServer(clientId, clientSec, onAuth) {
+  var app = express();
+  app.get('/webhook', function (req, res) {
+    console.log('Incoming wunderlist auth:', req.query);
+    var post = {
+      url: 'https://www.wunderlist.com/oauth/access_token',
+      form: {
+        client_id: WL_CLIENT_ID,
+        client_secret: WL_CLIENT_SECRET,
+        code: req.query.code
+      }
+    };
+    console.log('POSTing to:', post.url, '...');
+    request.post(post, function(err, httpResponse, body){
+      console.log('=> wunderlist POST response:', body);
+      try { body = JSON.parse(body); }
+      catch (e) { return e.printStack(); }
+      onAuth(body.access_token);
+    });
+    res.send(HTML_AUTOCLOSE);
+  });
+  server = app.listen(PORT, function () {
+  });
+}
+*/
 /*
  * Verify that the callback came from Facebook. Using the App Secret from
  * the App Dashboard, we can verify the signature that is sent with each
