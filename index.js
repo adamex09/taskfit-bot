@@ -50,7 +50,7 @@ app.use(bodyParser.json({ verify: verifyRequestSignature }));
 
 // Index route
 app.get('/', function (req, res) {
-    res.send('Hi, I am a chat botassistant for Taskfit. Up and running!')
+    res.send('Hi, I am a chat bot assistant for Taskfit. Up and running!')
 })
 
 // Webhook setup
@@ -169,7 +169,7 @@ function sendLoginMessage(sender) {
           "image_url": "https://d13yacurqjgara.cloudfront.net/users/198461/screenshots/2419865/wunderlist.png",
           "buttons": [{
             "type": "account_link",
-            "url": "https://www.wunderlist.com/oauth/authorize?client_id=" + WL_CLIENT_ID + "&redirect_uri=https://infinite-lowlands-16700.herokuapp.com/&state=ADAMEX"
+            "url": "https://www.wunderlist.com/oauth/authorize?client_id=" + WL_CLIENT_ID + "&redirect_uri=https://messenger.com/messenger_platform/account_linking/?account_linking_token=ARSX9tGlT3Wj3KQb8VSc4gHHIksdRYte_bhynytNmnogp6VBsbjn3mXgn3bE-hcaUqi_fZeIlXSX6KL8cgkZ7CB6i2dzhtik2UaBfYMbPbf8NA&state=ADAMEX"
           }]
         }]
       }
