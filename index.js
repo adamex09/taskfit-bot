@@ -81,7 +81,7 @@ app.post('/webhook/', function (req, res) {
         continue
       }
       if (text === 'Login') {
-        sendGLoginMessage(sender);
+        sendLoginMessage(sender);
         console.log('Login message sent');
         continue
       }
