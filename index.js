@@ -134,7 +134,7 @@ function sendGenericMessage(sender) {
           {
             "type":"postback",
             "title":"Show tasks",
-            "payload": showLists(sender);
+            "payload": "USER_DEFINED_PAYLOAD"
           }
         ]
       }
