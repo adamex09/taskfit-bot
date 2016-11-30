@@ -50,7 +50,7 @@ app.use(bodyParser.json({ verify: verifyRequestSignature }));
 
 // Index route
 app.get('/', function (req, res) {
-    res.send('Hi, I am a chat botassistant for Taskfit')
+    res.send('Hi, I am a chat botassistant for Taskfit. Up and running!')
 })
 
 // Webhook setup
@@ -74,7 +74,8 @@ app.post('/webhook/', function (req, res) {
     if (event.message && event.message.text) {
       let text = event.message.text
       if (text === 'Hello') {
-        sendTextMessage(sender, "Hi {{user_first_name}}! ")
+        sendTextMessage(sender, "Hi!");
+        sendGenericMessage(sender);
         console.log('Hello message sent');
         continue
       }
@@ -113,33 +114,23 @@ function sendTextMessage(sender, text) {
 
 function sendGenericMessage(sender) {
   let messageData = {
-    "attachment": {
-      "type": "template",
-      "payload": {
-        "template_type": "generic",
-        "elements": [{
-          "title": "First card",
-          "subtitle": "Element #1 of an hscroll",
-          "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
-          "buttons": [{
-            "type": "web_url",
-            "url": "https://www.messenger.com",
-            "title": "web url"
-          }, {
-            "type": "postback",
-            "title": "Postback",
-            "payload": "Payload for first element in a generic bubble",
-          }],
-        }, {
-          "title": "Second card",
-          "subtitle": "Element #2 of an hscroll",
-          "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
-          "buttons": [{
-            "type": "postback",
-            "title": "Postback",
-            "payload": "Payload for second element in a generic bubble",
-          }],
-        }]
+    "attachment":{
+      "type":"template",
+      "payload":{
+        "template_type":"button",
+        "text":"Please choose from the options:",
+        "buttons":[
+          {
+            "type":"postback",
+            "title":"Show tasks",
+            "payload":"USER_DEFINED_PAYLOAD"
+          },
+          {
+            "type":"postback",
+            "title":"Show lists",
+            "payload":"USER_DEFINED_PAYLOAD"
+          }
+        ]
       }
     }
   }
