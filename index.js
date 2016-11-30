@@ -18,13 +18,15 @@ const WL_CLIENT_ID = process.env.WL_CLIENT_ID;
 const WL_CLIENT_SECRET = process.env.WL_CLIENT_SECRET;
 const WL_ACCESS_TOKEN = process.env.WL_ACCESS_TOKEN;
 
+
+
+//Wunderlist 
 var WunderlistSDK = require('wunderlist');
 var wunderlistAPI = new WunderlistSDK({
    accessToken: encodeURIComponent(WL_ACCESS_TOKEN),
    clientID: WL_CLIENT_ID
 });
 
-//Wunderlist 
 wunderlistAPI.http.lists.all()
   .done(function (lists) {
     /* do stuff */
@@ -71,12 +73,12 @@ app.post('/webhook/', function (req, res) {
     let sender = event.sender.id
     if (event.message && event.message.text) {
       let text = event.message.text
-      if (text === 'Generic') {
-        sendGenericMessage(sender);
-        console.log('Generic message sent yo!');
+      if (text === 'Hello') {
+        sendTextMessage(sender, "Hi {{user_first_name}}! ")
+        console.log('Hello message sent');
         continue
       }
-      sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+      sendGenericMessage(sender);
     }
     if (event.postback) {
       let text = JSON.stringify(event.postback)
@@ -86,6 +88,7 @@ app.post('/webhook/', function (req, res) {
   }
   res.sendStatus(200)
 })
+
 
 function sendTextMessage(sender, text) {
   let messageData = { text:text }
@@ -106,6 +109,7 @@ function sendTextMessage(sender, text) {
     }
   })
 }
+
 
 function sendGenericMessage(sender) {
   let messageData = {
