@@ -73,12 +73,19 @@ app.post('/webhook/', function (req, res) {
     let sender = event.sender.id
     if (event.message && event.message.text) {
       let text = event.message.text
+      //if message is ... then ...
       if (text === 'Hello') {
         sendTextMessage(sender, "Hi!");
         sendGenericMessage(sender);
         console.log('Hello message sent');
         continue
       }
+      if (text === 'Login') {
+        sendGLoginMessage(sender);
+        console.log('Login message sent');
+        continue
+      }
+      //else send genericmessage
       sendGenericMessage(sender);
     }
     if (event.postback) {
@@ -131,6 +138,40 @@ function sendGenericMessage(sender) {
             "payload":"USER_DEFINED_PAYLOAD"
           }
         ]
+      }
+    }
+  }
+  request({
+    url: 'https://graph.facebook.com/v2.6/me/messages',
+    qs: {access_token:FB_PAGE_ACCESS_TOKEN},
+    method: 'POST',
+    json: {
+      recipient: {id:sender},
+      message: messageData,
+    }
+  }, function(error, response, body) {
+    if (error) {
+      console.log('Error sending messages: ', error)
+    } else if (response.body.error) {
+      console.log('Error: ', response.body.error)
+    }
+  })
+}
+
+function sendLoginMessage(sender) {
+  let messageData = {
+    "attachment": {
+      "type": "template",
+      "payload": {
+        "template_type": "generic",
+        "elements": [{
+          "title": "Welcome Taskfit, please log in to your Wunderlist account.",
+          "image_url": "https://d13yacurqjgara.cloudfront.net/users/198461/screenshots/2419865/wunderlist.png",
+          "buttons": [{
+            "type": "account_link",
+            "url": "https://www.wunderlist.com/oauth/authorize?client_id=" + WL_CLIENT_ID + "&redirect_uri=https://infinite-lowlands-16700.herokuapp.com/&state=ADAMEX"
+          }]
+        }]
       }
     }
   }
