@@ -8,22 +8,10 @@ const express = require('express');
 const fetch = require('node-fetch');
 const request = require('request');
 
-let Wit = null;
-let log = null;
-try {
-  // if running from repo
-  Wit = require('../').Wit;
-  log = require('../').log;
-} catch (e) {
-  Wit = require('node-wit').Wit;
-  log = require('node-wit').log;
-}
-
 // Webserver parameter
 const PORT = process.env.PORT || 8445;
 
 // SERVER VARS
-const WIT_TOKEN = process.env.WIT_TOKEN;
 const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
 const FB_APP_SECRET = process.env.FB_APP_SECRET;
 const WL_CLIENT_ID = process.env.WL_CLIENT_ID;
@@ -46,30 +34,6 @@ wunderlistAPI.http.lists.all()
   });
 
 // ----------------------------------------------------------------------------
-// Messenger API specific code
-
-// See the Send API reference
-// https://developers.facebook.com/docs/messenger-platform/send-api-reference
-
-const fbMessage = (id, text) => {
-  const body = JSON.stringify({
-    recipient: { id },
-    message: { text },
-  });
-  const qs = 'access_token=' + encodeURIComponent(FB_PAGE_ACCESS_TOKEN);
-  return fetch('https://graph.facebook.com/me/messages?' + qs, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body,
-  })
-  .then(rsp => rsp.json())
-  .then(json => {
-    if (json.error && json.error.message) {
-      throw new Error(json.error.message);
-    }
-    return json;
-  });
-};
 
 
 // Starting our webserver and putting it all together
