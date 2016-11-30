@@ -92,11 +92,6 @@ app.post('/webhook/', function (req, res) {
       //else send genericmessage
       sendGenericMessage(sender);
     }
-    if (event.postback) {
-      let text = JSON.stringify(event.postback)
-      sendTextMessage(sender, "Postback received: "+text.substring(0, 200), FB_PAGE_ACCESS_TOKEN)
-      continue
-    }
   }
   res.sendStatus(200)
 })
@@ -139,7 +134,7 @@ function sendGenericMessage(sender) {
           {
             "type":"postback",
             "title":"Show tasks",
-            "payload":"USER_DEFINED_PAYLOAD"
+            "payload": showLists(sender);
           }
         ]
       }
@@ -205,9 +200,9 @@ function showLists(sender) {
             "top_element_style": "compact",
             "elements": [
                 {
-                    "title": "Classic White T-Shirt",
+                    "title": "Inbox",
                     "image_url": "https://peterssendreceiveapp.ngrok.io/img/white-t-shirt.png",
-                    "subtitle": "100% Cotton, 200% Comfortable",
+                    "subtitle": "16 tasks",
                     "default_action": {
                         "type": "web_url",
                         "url": "https://peterssendreceiveapp.ngrok.io/view?item=100",
@@ -217,19 +212,16 @@ function showLists(sender) {
                     },
                     "buttons": [
                         {
-                            "title": "Buy",
-                            "type": "web_url",
-                            "url": "https://peterssendreceiveapp.ngrok.io/shop?item=100",
-                            "messenger_extensions": true,
-                            "webview_height_ratio": "tall",
-                            "fallback_url": "https://peterssendreceiveapp.ngrok.io/"                        
+                            "title": "Select",
+                            "type": "postback",
+                            "payload":"USER_DEFINED_PAYLOAD"               
                         }
                     ]                
                 },
                 {
-                    "title": "Classic Blue T-Shirt",
+                    "title": "Personal",
                     "image_url": "https://peterssendreceiveapp.ngrok.io/img/blue-t-shirt.png",
-                    "subtitle": "100% Cotton, 200% Comfortable",
+                    "subtitle": "8 tasks",
                     "default_action": {
                         "type": "web_url",
                         "url": "https://peterssendreceiveapp.ngrok.io/view?item=101",
@@ -239,19 +231,16 @@ function showLists(sender) {
                     },
                     "buttons": [
                         {
-                            "title": "Buy",
-                            "type": "web_url",
-                            "url": "https://peterssendreceiveapp.ngrok.io/shop?item=101",
-                            "messenger_extensions": true,
-                            "webview_height_ratio": "tall",
-                            "fallback_url": "https://peterssendreceiveapp.ngrok.io/"                        
+                            "title": "Select",
+                            "type": "postback",
+                            "payload":"USER_DEFINED_PAYLOAD"                        
                         }
                     ]                
                 },
                 {
-                    "title": "Classic Black T-Shirt",
+                    "title": "Basewalk",
                     "image_url": "https://peterssendreceiveapp.ngrok.io/img/black-t-shirt.png",
-                    "subtitle": "100% Cotton, 200% Comfortable",
+                    "subtitle": "31 tasks",
                     "default_action": {
                         "type": "web_url",
                         "url": "https://peterssendreceiveapp.ngrok.io/view?item=102",
@@ -261,19 +250,16 @@ function showLists(sender) {
                     },
                     "buttons": [
                         {
-                            "title": "Buy",
-                            "type": "web_url",
-                            "url": "https://peterssendreceiveapp.ngrok.io/shop?item=102",
-                            "messenger_extensions": true,
-                            "webview_height_ratio": "tall",
-                            "fallback_url": "https://peterssendreceiveapp.ngrok.io/"                        
+                            "title": "Select",
+                            "type": "postback",
+                            "payload":"USER_DEFINED_PAYLOAD"                      
                         }
                     ]                
                 },
                 {
-                    "title": "Classic Gray T-Shirt",
+                    "title": "Shopping",
                     "image_url": "https://peterssendreceiveapp.ngrok.io/img/gray-t-shirt.png",
-                    "subtitle": "100% Cotton, 200% Comfortable",
+                    "subtitle": "1 task",
                     "default_action": {
                         "type": "web_url",
                         "url": "https://peterssendreceiveapp.ngrok.io/view?item=103",
@@ -283,12 +269,9 @@ function showLists(sender) {
                     },
                     "buttons": [
                         {
-                            "title": "Buy",
-                            "type": "web_url",
-                            "url": "https://peterssendreceiveapp.ngrok.io/shop?item=103",
-                            "messenger_extensions": true,
-                            "webview_height_ratio": "tall",
-                            "fallback_url": "https://peterssendreceiveapp.ngrok.io/"                        
+                            "title": "Select",
+                            "type": "postback",
+                            "payload":"USER_DEFINED_PAYLOAD"                     
                         }
                     ]                
                 }
