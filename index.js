@@ -379,13 +379,13 @@ const authorizationUri = oauth2.authorizationCode.authorizeURL({
 });
 
 // Initial page redirecting to Wunderlist
-app.get('/webhook', (req, res) => {
+app.get('/auth', (req, res) => {
   console.log(authorizationUri);
   res.redirect(authorizationUri);
 });
 
 // Callback service parsing the authorization token and asking for the access token
-app.get('/webhook', (req, res) => {
+app.get('/callback', (req, res) => {
   const code = req.query.code;
   const options = {
     code,
