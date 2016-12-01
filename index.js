@@ -365,7 +365,7 @@ function startWunderlistAuthServer(clientId, clientSec, onAuth) {
  * https://developers.facebook.com/docs/graph-api/webhooks#setup
  *
  */
-const simpleOauthModule = require('./../');
+const simpleOauthModule = require('simple-oauth2');
 
 const oauth2 = simpleOauthModule.create({
   client: {
