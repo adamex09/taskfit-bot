@@ -98,6 +98,7 @@ app.post('/webhook/', function (req, res) {
       if (text === 'Show tasks') {
         showLists(sender);
         console.log('Showing tasks');
+        continue
         }
     }
   }
