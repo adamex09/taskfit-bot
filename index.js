@@ -95,9 +95,10 @@ app.post('/webhook/', function (req, res) {
     //Postback events
     if (event.postback) {
       let text = JSON.stringify(event.postback)
-      if (text === 'show_tasks') {
-        showLists(sender);
-        console.log('Showing tasks, postback');
+      //if (text === 'show_tasks') {
+        sendTextMessage(sender, "Postback received: "+text.substring(0, 200), FB_PAGE_ACCESS_TOKEN);
+       // showLists(sender);
+       // console.log('Showing tasks, postback');
         continue
         }
     }
