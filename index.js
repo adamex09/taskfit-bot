@@ -100,7 +100,7 @@ app.post('/webhook/', function (req, res) {
        // showLists(sender);
        // console.log('Showing tasks, postback');
         continue
-        }
+        //}
     }
   }
   res.sendStatus(200)
@@ -144,7 +144,7 @@ function sendGenericMessage(sender) {
           {
             "type":"postback",
             "title":"Show tasks",
-            "payload": "show_tasks"
+            "payload":"show_tasks"
           }
         ]
       }
