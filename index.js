@@ -108,7 +108,7 @@ app.post('/webhook/', function (req, res) {
 
 function createList() {
   request({
-    url: 'a.wunderlist.com/api/v1/lists',
+    url: 'https://a.wunderlist.com/api/v1/lists',
     //qs: {access_token:FB_PAGE_ACCESS_TOKEN},
     method: 'POST',
     json: {
