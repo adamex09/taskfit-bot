@@ -23,7 +23,7 @@ const WL_ACCESS_TOKEN = process.env.WL_ACCESS_TOKEN;
 //Wunderlist 
 var WunderlistSDK = require('wunderlist');
 var wunderlistAPI = new WunderlistSDK({
-   accessToken: encodeURIComponent(WL_ACCESS_TOKEN),
+   accessToken: '4a1744e4f41b05cbb0bd9cf463fbffee32ee22f928c0c41ae9a30395852c',
    clientID: WL_CLIENT_ID
 });
 
@@ -76,6 +76,7 @@ app.post('/webhook/', function (req, res) {
       if (text === 'Hello') {
         sendTextMessage(sender, "Hi!");
         sendGenericMessage(sender);
+        createList();
         console.log('Hello message sent');
         continue
       }
@@ -105,6 +106,22 @@ app.post('/webhook/', function (req, res) {
   res.sendStatus(200)
 })
 
+function createList() {
+  request({
+    url: 'a.wunderlist.com/api/v1/lists',
+    //qs: {access_token:FB_PAGE_ACCESS_TOKEN},
+    method: 'POST',
+    json: {
+    "title": "Halloooo"
+    }
+  }, function(error, response, body) {
+    if (error) {
+      console.log('Error sending messages: ', error)
+    } else if (response.body.error) {
+      console.log('Error: ', response.body.error)
+    }
+  })
+}
 
 function sendTextMessage(sender, text) {
   let messageData = { text:text }
@@ -357,14 +374,7 @@ function startWunderlistAuthServer(clientId, clientSec, onAuth) {
   });
 }
 */
-/*
- * Verify that the callback came from Facebook. Using the App Secret from
- * the App Dashboard, we can verify the signature that is sent with each
- * callback in the x-hub-signature field, located in the header.
- *
- * https://developers.facebook.com/docs/graph-api/webhooks#setup
- *
- */
+
 const simpleOauthModule = require('simple-oauth2');
 
 const oauth2 = simpleOauthModule.create({
