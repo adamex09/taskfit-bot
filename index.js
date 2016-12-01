@@ -92,6 +92,14 @@ app.post('/webhook/', function (req, res) {
       //else send genericmessage
       sendGenericMessage(sender);
     }
+    //Postback events
+    if (event.postback) {
+      let text = JSON.stringify(event.postback)
+      if (text === 'Show tasks') {
+        showLists(sender);
+        console.log('Showing tasks');
+        }
+    }
   }
   res.sendStatus(200)
 })
@@ -129,12 +137,12 @@ function sendGenericMessage(sender) {
           {
             "type":"postback",
             "title":"Create new task",
-            "payload":"USER_DEFINED_PAYLOAD"
+            "payload":"Create new task"
           },
           {
             "type":"postback",
             "title":"Show tasks",
-            "payload": "USER_DEFINED_PAYLOAD"
+            "payload": "Show tasks"
           }
         ]
       }
@@ -271,7 +279,7 @@ function showLists(sender) {
                         {
                             "title": "Select",
                             "type": "postback",
-                            "payload":"USER_DEFINED_PAYLOAD"                     
+                            "payload":"USER_DEFINED_PAYLOAD"                      
                         }
                     ]                
                 }
