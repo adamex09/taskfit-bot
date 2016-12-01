@@ -23,7 +23,7 @@ const WL_ACCESS_TOKEN = process.env.WL_ACCESS_TOKEN;
 //Wunderlist 
 var WunderlistSDK = require('wunderlist');
 var wunderlistAPI = new WunderlistSDK({
-   accessToken: '4a1744e4f41b05cbb0bd9cf463fbffee32ee22f928c0c41ae9a30395852c',
+   accessToken: encodeURIComponent(WL_ACCESS_TOKEN),
    clientID: WL_CLIENT_ID
 });
 
@@ -76,7 +76,6 @@ app.post('/webhook/', function (req, res) {
       if (text === 'Hello') {
         sendTextMessage(sender, "Hi!");
         sendGenericMessage(sender);
-        createList();
         console.log('Hello message sent');
         continue
       }
@@ -106,22 +105,6 @@ app.post('/webhook/', function (req, res) {
   res.sendStatus(200)
 })
 
-function createList() {
-  request({
-    url: 'https://a.wunderlist.com/api/v1/lists',
-    //qs: {access_token:FB_PAGE_ACCESS_TOKEN},
-    method: 'POST',
-    json: {
-    "title": "Halloooo"
-    }
-  }, function(error, response, body) {
-    if (error) {
-      console.log('Error sending messages: ', error)
-    } else if (response.body.error) {
-      console.log('Error: ', response.body.error)
-    }
-  })
-}
 
 function sendTextMessage(sender, text) {
   let messageData = { text:text }
@@ -402,7 +385,7 @@ app.get('/auth', (req, res) => {
 });
 
 // Callback service parsing the authorization token and asking for the access token
-app.get('/callback', (req, res) => {
+app.get('/', (req, res) => {
   const code = req.query.code;
   const options = {
     code,
