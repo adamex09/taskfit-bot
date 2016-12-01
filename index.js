@@ -365,6 +365,63 @@ function startWunderlistAuthServer(clientId, clientSec, onAuth) {
  * https://developers.facebook.com/docs/graph-api/webhooks#setup
  *
  */
+const simpleOauthModule = require('./../');
+
+const oauth2 = simpleOauthModule.create({
+  client: {
+    id: WL_CLIENT_ID,
+    secret: WL_CLIENT_SECRET,
+  },
+  auth: {
+    tokenHost: 'https://www.wunderlist.com',
+    tokenPath: '/oauth/access_token',
+    authorizePath: '/oauth/authorize',
+  },
+});
+
+// Authorization uri definition
+const authorizationUri = oauth2.authorizationCode.authorizeURL({
+  redirect_uri: 'http://localhost:3000/callback',
+  state: 'ADAMEX',
+});
+
+// Initial page redirecting to Wunderlist
+app.get('/auth', (req, res) => {
+  console.log(authorizationUri);
+  res.redirect(authorizationUri);
+});
+
+// Callback service parsing the authorization token and asking for the access token
+app.get('/callback', (req, res) => {
+  const code = req.query.code;
+  const options = {
+    code,
+  };
+
+  oauth2.authorizationCode.getToken(options, (error, result) => {
+    if (error) {
+      console.error('Access Token Error', error.message);
+      return res.json('Authentication failed');
+    }
+
+    console.log('The resulting token: ', result);
+    const token = oauth2.accessToken.create(result);
+
+    return res
+      .status(200)
+      .json(token);
+  });
+});
+
+app.get('/success', (req, res) => {
+  res.send('');
+});
+
+app.get('/', (req, res) => {
+  res.send('Hello<br><a href="/auth">Log in with Wunderlist</a>');
+});
+
+
 function verifyRequestSignature(req, res, buf) {
   var signature = req.headers["x-hub-signature"];
 
