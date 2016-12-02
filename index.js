@@ -85,6 +85,10 @@ app.post('/webhook/', function (req, res) {
         console.log('Login message sent');
         continue
       }
+      if (text === 'Revoke') {
+        tokenRevoke();
+        continue
+      }
       if (text === 'Show tasks') {
         showLists(sender);
         console.log('Showing tasks');
@@ -348,6 +352,7 @@ const oauth2 = simpleOauthModule.create({
     tokenHost: 'https://www.wunderlist.com',
     tokenPath: '/oauth/access_token',
     authorizePath: '/oauth/authorize',
+    revokePath: '/oauth/revoke',
   },
 });
 
@@ -382,7 +387,7 @@ app.get('/callback', (req, res) => {
     console.log(wunderlist_access_token);
     return res
       .status(200)
-      .json(wunderlist_access_token);
+      .json('Succesful authentication. Go back to Messenger.');
   });
 });
 
@@ -393,6 +398,16 @@ app.get('/success', (req, res) => {
 app.get('/', (req, res) => {
   res.send('Hello<br><a href="/auth">Log in with Wunderlist</a>');
 });
+
+function tokenRevoke() {
+token.revoke(wunderlist_access_token)
+  .then(() => {
+    console.log('Token revoked');
+  })
+  .catch((error) => {
+    console.log('Error revoking token.', error.message);
+  });
+ } 
 
 //Facebook auth
 function verifyRequestSignature(req, res, buf) {
