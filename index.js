@@ -133,7 +133,7 @@ function createList() {
     headers: {
     'X-Access-Token': wunderlist_access_token,
     'X-Client-ID' : WL_CLIENT_ID
-    }
+    },
     qs: {access_token:wunderlist_access_token},
     method: 'POST',
     json: {
