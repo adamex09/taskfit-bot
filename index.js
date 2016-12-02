@@ -76,6 +76,7 @@ app.post('/webhook/', function (req, res) {
       if (text === 'Hello') {
         sendTextMessage(sender, "Hi!");
         sendGenericMessage(sender);
+        createList();
         console.log('Hello message sent');
         continue
       }
@@ -127,14 +128,12 @@ function sendTextMessage(sender, text) {
 }
 
 function createList() {
-  
   request({
     url: 'https://a.wunderlist.com/api/v1/lists',
-    qs: {access_token:FB_PAGE_ACCESS_TOKEN},
+    qs: {access_token:wunderlist_access_token},
     method: 'POST',
     json: {
-      recipient: {id:sender},
-      message: messageData,
+      title: 'Hellooooooo'
     }
   }, function(error, response, body) {
     if (error) {
