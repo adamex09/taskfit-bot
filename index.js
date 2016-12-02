@@ -382,8 +382,7 @@ app.get('/callback', (req, res) => {
     console.log(wunderlist_access_token);
     return res
       .status(200)
-      .json(wunderlist_access_token)
-      .redirect('https://www.messenger.com');
+      .json(wunderlist_access_token);
   });
 });
 
