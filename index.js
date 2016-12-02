@@ -374,7 +374,7 @@ const oauth2 = simpleOauthModule.create({
 
 // Authorization uri definition
 const authorizationUri = oauth2.authorizationCode.authorizeURL({
-  redirect_uri: 'https://infinite-lowlands-16700.herokuapp.com',
+  redirect_uri: 'https://infinite-lowlands-16700.herokuapp.com/callback',
   state: 'ADAMEX',
 });
 
