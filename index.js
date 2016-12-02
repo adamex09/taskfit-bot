@@ -408,7 +408,7 @@ app.get('/auth', (req, res) => {
 });
 
 // Callback service parsing the authorization token and asking for the access token
-app.get('/callback', (req, res) => {
+app.get('/webhook', (req, res) => {
   const code = req.query.code;
   const options = {
     code,
