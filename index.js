@@ -196,11 +196,11 @@ function sendLoginMessage(sender) {
       "payload": {
         "template_type": "generic",
         "elements": [{
-          "title": "Welcome Taskfit, please log in to your Wunderlist account.",
+          "title": "Please log in to your Wunderlist account",
           "image_url": "https://d13yacurqjgara.cloudfront.net/users/198461/screenshots/2419865/wunderlist.png",
           "buttons": [{
-            "type": "account_link",
-            "url": "https://www.wunderlist.com/oauth/authorize?client_id=" + WL_CLIENT_ID + "&state=ADAMEX"
+            "type": "web_url",
+            "url": "https://infinite-lowlands-16700.herokuapp.com/auth"
           }]
         }]
       }
@@ -335,52 +335,7 @@ function showLists(sender) {
   })
 }
 
-
-/*
-function WunderlistAuth(sender, text) {
-  request({
-    url: 'https://www.wunderlist.com/oauth/access_token',
-    method: 'POST',
-    json: { 
-      "code":"<CODE>", 
-      "client_id": WL_CLIENT_ID,
-      "client_secret": WL_CLIENT_SECRET
-    }
-  }, function(error, response, body) {
-    if (error) {
-      console.log('Error authenticating: ', error)
-    } else if (response.body.error) {
-      console.log('Error: ', response.body.error)
-    }
-  })
-}
-
-function startWunderlistAuthServer(clientId, clientSec, onAuth) {
-  var app = express();
-  app.get('/webhook', function (req, res) {
-    console.log('Incoming wunderlist auth:', req.query);
-    var post = {
-      url: 'https://www.wunderlist.com/oauth/access_token',
-      form: {
-        client_id: WL_CLIENT_ID,
-        client_secret: WL_CLIENT_SECRET,
-        code: req.query.code
-      }
-    };
-    console.log('POSTing to:', post.url, '...');
-    request.post(post, function(err, httpResponse, body){
-      console.log('=> wunderlist POST response:', body);
-      try { body = JSON.parse(body); }
-      catch (e) { return e.printStack(); }
-      onAuth(body.access_token);
-    });
-    res.send(HTML_AUTOCLOSE);
-  });
-  server = app.listen(PORT, function () {
-  });
-}
-*/
-
+//Wunderlist Auth start
 const simpleOauthModule = require('simple-oauth2');
 
 const oauth2 = simpleOauthModule.create({
@@ -408,7 +363,7 @@ app.get('/auth', (req, res) => {
 });
 
 // Callback service parsing the authorization token and asking for the access token
-app.get('/webhook', (req, res) => {
+app.get('/callback', (req, res) => {
   const code = req.query.code;
   const options = {
     code,
@@ -426,7 +381,8 @@ app.get('/webhook', (req, res) => {
     console.log(wunderlist_access_token);
     return res
       .status(200)
-      .json(wunderlist_access_token);
+      .json(wunderlist_access_token)
+      .redirect('https://www.messenger.com');
   });
 });
 
@@ -438,7 +394,7 @@ app.get('/', (req, res) => {
   res.send('Hello<br><a href="/auth">Log in with Wunderlist</a>');
 });
 
-
+//Facebook auth
 function verifyRequestSignature(req, res, buf) {
   var signature = req.headers["x-hub-signature"];
 
