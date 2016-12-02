@@ -18,7 +18,7 @@ const WL_CLIENT_ID = process.env.WL_CLIENT_ID;
 const WL_CLIENT_SECRET = process.env.WL_CLIENT_SECRET;
 const WL_ACCESS_TOKEN = process.env.WL_ACCESS_TOKEN;
 
-const wunderlist_access_token = '';
+let wunderlist_access_token = '';
 
 //Wunderlist 
 var WunderlistSDK = require('wunderlist');
