@@ -200,6 +200,7 @@ function sendLoginMessage(sender) {
           "image_url": "https://d13yacurqjgara.cloudfront.net/users/198461/screenshots/2419865/wunderlist.png",
           "buttons": [{
             "type": "web_url",
+            "title": "Login",
             "url": "https://infinite-lowlands-16700.herokuapp.com/auth"
           }]
         }]
