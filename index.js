@@ -19,6 +19,7 @@ const WL_CLIENT_SECRET = process.env.WL_CLIENT_SECRET;
 const WL_ACCESS_TOKEN = process.env.WL_ACCESS_TOKEN;
 
 let wunderlist_access_token = '';
+let wunderlist_token = '';
 
 //Wunderlist 
 var WunderlistSDK = require('wunderlist');
@@ -419,6 +420,7 @@ app.get('/callback', (req, res) => {
 
     console.log('The resulting token: ', result);
     const token = oauth2.accessToken.create(result);
+    wunderlist_token = token;
     wunderlist_access_token = token.token.access_token;
     console.log(wunderlist_access_token);
     return res
@@ -429,7 +431,7 @@ app.get('/callback', (req, res) => {
 
 //Revoke auth
 app.get('/revoke', (req, res) => {
-oauth2.accessToken.revoke(wunderlist_access_token)
+wunderlist_token.revoke(wunderlist_access_token)
   .then(() => {
     console.log('Token revoked');
     return res
