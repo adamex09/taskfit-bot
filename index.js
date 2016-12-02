@@ -429,7 +429,7 @@ app.get('/callback', (req, res) => {
 
 //Revoke auth
 app.get('/revoke', (req, res) => {
-token.revoke(wunderlist_access_token)
+oauth2.accessToken.revoke(wunderlist_access_token)
   .then(() => {
     console.log('Token revoked');
     return res
