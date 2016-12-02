@@ -86,7 +86,8 @@ app.post('/webhook/', function (req, res) {
         continue
       }
       if (text === 'Revoke') {
-        tokenRevoke();
+        sendLogoutMessage(sender);
+        console.log('Logout message sent');
         continue
       }
       if (text === 'Show tasks') {
@@ -206,6 +207,41 @@ function sendLoginMessage(sender) {
             "type": "web_url",
             "title": "Login",
             "url": "https://infinite-lowlands-16700.herokuapp.com/auth"
+          }]
+        }]
+      }
+    }
+  }
+  request({
+    url: 'https://graph.facebook.com/v2.6/me/messages',
+    qs: {access_token:FB_PAGE_ACCESS_TOKEN},
+    method: 'POST',
+    json: {
+      recipient: {id:sender},
+      message: messageData,
+    }
+  }, function(error, response, body) {
+    if (error) {
+      console.log('Error sending messages: ', error)
+    } else if (response.body.error) {
+      console.log('Error: ', response.body.error)
+    }
+  })
+}
+
+function sendLogoutMessage(sender) {
+  let messageData = {
+    "attachment": {
+      "type": "template",
+      "payload": {
+        "template_type": "generic",
+        "elements": [{
+          "title": "Logout from Wunderlist",
+          "image_url": "https://d13yacurqjgara.cloudfront.net/users/198461/screenshots/2419865/wunderlist.png",
+          "buttons": [{
+            "type": "web_url",
+            "title": "Logout",
+            "url": "https://infinite-lowlands-16700.herokuapp.com/revoke"
           }]
         }]
       }
@@ -391,6 +427,20 @@ app.get('/callback', (req, res) => {
   });
 });
 
+//Revoke auth
+app.get('/revoke', (req, res) => {
+token.revoke(wunderlist_access_token)
+  .then(() => {
+    console.log('Token revoked');
+    return res
+      .status(200)
+      .json('Token revoked');
+  })
+  .catch((error) => {
+    console.log('Error revoking token.', error.message);
+  });
+});
+
 app.get('/success', (req, res) => {
   res.send('');
 });
@@ -399,15 +449,6 @@ app.get('/', (req, res) => {
   res.send('Hello<br><a href="/auth">Log in with Wunderlist</a>');
 });
 
-function tokenRevoke() {
-token.revoke(wunderlist_access_token)
-  .then(() => {
-    console.log('Token revoked');
-  })
-  .catch((error) => {
-    console.log('Error revoking token.', error.message);
-  });
- } 
 
 //Facebook auth
 function verifyRequestSignature(req, res, buf) {
