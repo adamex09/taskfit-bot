@@ -18,7 +18,7 @@ const WL_CLIENT_ID = process.env.WL_CLIENT_ID;
 const WL_CLIENT_SECRET = process.env.WL_CLIENT_SECRET;
 const WL_ACCESS_TOKEN = process.env.WL_ACCESS_TOKEN;
 
-
+const wunderlist_access_token = '';
 
 //Wunderlist 
 var WunderlistSDK = require('wunderlist');
@@ -125,6 +125,26 @@ function sendTextMessage(sender, text) {
     }
   })
 }
+
+function createList() {
+  
+  request({
+    url: 'https://a.wunderlist.com/api/v1/lists',
+    qs: {access_token:FB_PAGE_ACCESS_TOKEN},
+    method: 'POST',
+    json: {
+      recipient: {id:sender},
+      message: messageData,
+    }
+  }, function(error, response, body) {
+    if (error) {
+      console.log('Error sending messages: ', error)
+    } else if (response.body.error) {
+      console.log('Error: ', response.body.error)
+    }
+  })
+}
+
 
 
 function sendGenericMessage(sender) {
@@ -399,10 +419,11 @@ app.get('/callback', (req, res) => {
 
     console.log('The resulting token: ', result);
     const token = oauth2.accessToken.create(result);
-
+    wunderlist_access_token = token.token.access_token;
+    console.log(wunderlist_access_token);
     return res
       .status(200)
-      .json(token);
+      .json(wunderlist_access_token);
   });
 });
 
