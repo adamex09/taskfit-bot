@@ -313,7 +313,7 @@ function showLists(sender) {
 }
 
 
-/*
+*/
 function WunderlistAuth(sender, text) {
   request({
     url: 'https://www.wunderlist.com/oauth/access_token',
@@ -374,7 +374,7 @@ const oauth2 = simpleOauthModule.create({
 
 // Authorization uri definition
 const authorizationUri = oauth2.authorizationCode.authorizeURL({
-  redirect_uri: 'https://messenger.com/messenger_platform/account_linking/?account_linking_token=ARSX9tGlT3Wj3KQb8VSc4gHHIksdRYte_bhynytNmnogp6VBsbjn3mXgn3bE-hcaUqi_fZeIlXSX6KL8cgkZ7CB6i2dzhtik2UaBfYMbPbf8NA',
+  redirect_uri: 'https://infinite-lowlands-16700.herokuapp.com',
   state: 'ADAMEX',
 });
 
@@ -385,7 +385,7 @@ app.get('/auth', (req, res) => {
 });
 
 // Callback service parsing the authorization token and asking for the access token
-app.get('/account_linking', (req, res) => {
+app.get('/callback', (req, res) => {
   const code = req.query.code;
   const options = {
     code,
