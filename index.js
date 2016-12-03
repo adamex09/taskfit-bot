@@ -28,15 +28,6 @@ var wunderlistAPI = new WunderlistSDK({
    clientID: WL_CLIENT_ID
 });
 
-wunderlistAPI.http.lists.all()
-  .done(function (lists) {
-    /* do stuff */
-  })
-  .fail(function () {
-    console.error('there was a problem');
-  });
-
-
 
 // Starting our webserver and putting it all together
 const app = express();
@@ -62,7 +53,6 @@ app.get('/webhook', (req, res) => {
     res.sendStatus(400);
   }
 });
-
 
 
 // to post data
@@ -91,9 +81,9 @@ app.post('/webhook/', function (req, res) {
         console.log('Logout message sent');
         continue
       }
-      if (text === 'Show tasks') {
+      if (text === 'Show lists') {
         showLists(sender);
-        console.log('Showing tasks');
+        console.log('Showing lists');
         continue
       }
       //else send genericmessage
@@ -102,9 +92,9 @@ app.post('/webhook/', function (req, res) {
     //Postback events
     if (event.postback) {
       let text = JSON.stringify(event.postback)
-      if (text === '{"payload":"show_tasks"}') {
+      if (text === '{"payload":"show_lists"}') {
         showLists(sender);
-        console.log('Showing tasks, postback');
+        console.log('Showing lists, postback');
         continue
         }
     }
@@ -154,6 +144,25 @@ function createList() {
   })
 }
 
+function showList() {
+  request({
+    url: 'https://a.wunderlist.com/api/v1/lists',
+    headers: {
+    'X-Access-Token': wunderlist_access_token,
+    'X-Client-ID' : WL_CLIENT_ID
+    },
+    qs: {access_token:wunderlist_access_token},
+    method: 'GET',
+  }, return console.log(obj),
+
+      function(error, response, body) {
+    if (error) {
+      console.log('Error sending messages: ', error)
+    } else if (response.body.error) {
+      console.log('Error: ', response.body.error)
+    }
+  })
+}
 
 
 function sendGenericMessage(sender) {
@@ -171,8 +180,8 @@ function sendGenericMessage(sender) {
           },
           {
             "type":"postback",
-            "title":"Show tasks",
-            "payload":"show_tasks"
+            "title":"Show lists",
+            "payload":"show_lists"
           }
         ]
       }
