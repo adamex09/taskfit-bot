@@ -153,15 +153,20 @@ function showList() {
     },
     qs: {access_token:wunderlist_access_token},
     method: 'GET',
-  }, return console.log(obj),
-
+  }, 
       function(error, response, body) {
-    if (error) {
-      console.log('Error sending messages: ', error)
-    } else if (response.body.error) {
-      console.log('Error: ', response.body.error)
+        if (error) {
+        console.log('Error sending messages: ', error)
+        } 
+        else if (response.body.error) {
+          console.log('Error: ', response.body.error)
+        }
+        else if (!error) {
+          console.log(obj)
+        }
+
     }
-  })
+  )
 }
 
 
