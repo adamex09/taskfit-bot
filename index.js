@@ -82,7 +82,7 @@ app.post('/webhook/', function (req, res) {
         continue
       }
       if (text === 'Show lists') {
-        showLists(sender);
+        showLists();
         console.log('Showing lists');
         continue
       }
@@ -93,7 +93,7 @@ app.post('/webhook/', function (req, res) {
     if (event.postback) {
       let text = JSON.stringify(event.postback)
       if (text === '{"payload":"show_lists"}') {
-        showLists(sender);
+        showLists();
         console.log('Showing lists, postback');
         continue
         }
@@ -144,7 +144,7 @@ function createList() {
   })
 }
 
-function showList() {
+function showLists() {
   request({
     url: 'https://a.wunderlist.com/api/v1/lists',
     headers: {
@@ -154,17 +154,16 @@ function showList() {
     qs: {access_token:wunderlist_access_token},
     method: 'GET',
   }, 
-      function(error, response, body) {
-        if (error) {
-        console.log('Error sending messages: ', error)
+    function(error, response, body) {
+        if (!error) {
+          console.log('nincs hiba' + body)
+        }
+        else if (error) {
+          console.log('Error sending messages: ', error)
         } 
         else if (response.body.error) {
           console.log('Error: ', response.body.error)
         }
-        else if (!error) {
-          console.log(obj)
-        }
-
     }
   )
 }
