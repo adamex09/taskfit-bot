@@ -156,7 +156,7 @@ function showLists() {
   }, 
     function(error, response, body) {
         if (!error) {
-          console.log('nincs hiba' + body)
+          console.log(response.body)
         }
         else if (error) {
           console.log('Error sending messages: ', error)
