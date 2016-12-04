@@ -88,7 +88,7 @@ app.post('/webhook/', function (req, res) {
         continue
       }
       if (text === 'Show lists') {
-        showLists();
+        showLists(sender);
         console.log('Showing lists');
         continue
       }
@@ -99,7 +99,7 @@ app.post('/webhook/', function (req, res) {
     if (event.postback) {
       let text = JSON.stringify(event.postback)
       if (text === '{"payload":"show_lists"}') {
-        showLists();
+        showLists(sender);
         console.log('Showing lists, postback');
         continue
         }
@@ -150,7 +150,7 @@ function createList() {
   })
 }
 
-function showLists() {
+/*function showLists() {
   request({
     url: 'https://a.wunderlist.com/api/v1/lists',
     headers: {
@@ -173,7 +173,7 @@ function showLists() {
     }
   )
 }
-
+*/
 
 function sendGenericMessage(sender) {
   let messageData = {
