@@ -67,13 +67,19 @@ app.post('/webhook/', function (req, res) {
       if (text === 'Hello') {
         sendTextMessage(sender, "Hi!");
         sendGenericMessage(sender);
-        createList();
+        
         console.log('Hello message sent');
         continue
       }
       if (text === 'Login') {
         sendLoginMessage(sender);
         console.log('Login message sent');
+        continue
+      }
+      if (text === 'Create list') {
+        createList();
+        sendTextMessage(sender, "Task created in Wunderlist!");
+        console.log('List created');
         continue
       }
       if (text === 'Revoke') {
@@ -133,7 +139,7 @@ function createList() {
     qs: {access_token:wunderlist_access_token},
     method: 'POST',
     json: {
-      title: 'Hellooooooo'
+      title: 'Hello from Taskfit-bot'
     }
   }, function(error, response, body) {
     if (error) {
